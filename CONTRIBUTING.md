@@ -15,8 +15,8 @@ Thank you for your interest in contributing to the ETF Dividend Tracker! This do
 
 1. **Fork and Clone**
    ```bash
-   git clone https://github.com/yourusername/etf-dividend-tracker.git
-   cd etf-dividend-tracker
+   git clone https://github.com/yourusername/etf-portfolio-dividend-tracker.git
+   cd etf-portfolio-dividend-tracker
    ```
 
 2. **Install Dependencies**

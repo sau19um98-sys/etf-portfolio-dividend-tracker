@@ -76,8 +76,8 @@ A production-ready ETF dividend tracking application optimized for the **Polygon
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/etf-dashboard.git
-   cd etf-dashboard
+   git clone https://github.com/yourusername/etf-portfolio-dividend-tracker.git
+   cd etf-portfolio-dividend-tracker
    ```
 
 2. **Install dependencies**
@@ -182,7 +182,7 @@ A production-ready ETF dividend tracking application optimized for the **Polygon
 ## 🏗️ Project Structure
 
 ```
-etf-dashboard/
+etf-portfolio-dividend-tracker/
 ├── public/                 # Static assets
 ├── src/
 │   ├── components/         # Reusable UI components
@@ -622,12 +622,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions or need help:
 
 - 📧 Email: support@etfdashboard.com
-- 💬 Discord: [Join our community](https://discord.gg/etfdashboard)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/etf-dashboard/issues)
+- 💬 Discord: [Join our community](https://discord.gg/etf-portfolio-dividend-tracker)
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/etf-portfolio-dividend-tracker/issues)
 
 ---
 
-Made with ❤️ by the ETF Dashboard Team
-#   N e w - E T F - T r a c k e r  
- #   N e w - E T F - T r a c k e r  
- 
+Made with ❤️ by the ETF Portfolio Dividend Tracker Team
