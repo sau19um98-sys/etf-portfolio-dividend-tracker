@@ -3,6 +3,19 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './styles/globals.css';
 
+// Register service worker for offline capabilities
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/serviceWorker.js')
+      .then(registration => {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      })
+      .catch(error => {
+        console.log('ServiceWorker registration failed: ', error);
+      });
+  });
+}
+
 // Error boundary component
 class ErrorBoundary extends React.Component {
   constructor(props) {

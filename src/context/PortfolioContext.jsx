@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { usePolygonWebSocket, formatWebSocketData } from '../services/polygonWebSocketService';
 
 const PortfolioContext = createContext();
 
@@ -6,6 +7,15 @@ export const PortfolioProvider = ({ children }) => {
   const [userHoldings, setUserHoldings] = useState([]);
   const [userTransactions, setUserTransactions] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [realtimeEnabled, setRealtimeEnabled] = useState(true);
+  
+  // Extract symbols from holdings for WebSocket subscription
+  const symbols = userHoldings.map(holding => holding.symbol);
+  
+  // Connect to Polygon WebSocket for real-time updates
+  const { stockData, connectionStatus, reconnect } = usePolygonWebSocket(
+    realtimeEnabled ? symbols : []
+  );
 
   // Load user data from localStorage on app start
   useEffect(() => {
@@ -126,14 +136,28 @@ export const PortfolioProvider = ({ children }) => {
     setUserHoldings([]);
   };
 
+  // Apply real-time updates to holdings if available
+  const holdingsWithRealtime = userHoldings.map(holding => {
+    if (realtimeEnabled && stockData[holding.symbol]) {
+      return formatWebSocketData(stockData, holding);
+    }
+    return holding;
+  });
+
   const value = {
-    userHoldings,
+    userHoldings: holdingsWithRealtime,
     userTransactions,
     isLoaded,
     addHolding,
     removeHolding,
     updateHolding,
-    clearHoldings
+    clearHoldings,
+    realtimeStatus: {
+      enabled: realtimeEnabled,
+      connectionStatus,
+      toggleRealtime: () => setRealtimeEnabled(prev => !prev),
+      reconnect
+    }
   };
 
   return (

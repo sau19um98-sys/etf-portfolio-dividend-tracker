@@ -1,0 +1,32 @@
+http:
+  routers:
+    frontend:
+      rule: "Host(`your-domain.com`)"
+      entryPoints:
+        - websecure
+      service: frontend
+      middlewares:
+        - securityHeaders
+      tls:
+        certResolver: myresolver
+    
+    appwrite:
+      rule: "Host(`appwrite.your-domain.com`)"
+      entryPoints:
+        - websecure
+      service: appwrite
+      middlewares:
+        - securityHeaders
+      tls:
+        certResolver: myresolver
+
+  services:
+    frontend:
+      loadBalancer:
+        servers:
+          - url: "http://frontend:80"
+    
+    appwrite:
+      loadBalancer:
+        servers:
+          - url: "http://appwrite:80"

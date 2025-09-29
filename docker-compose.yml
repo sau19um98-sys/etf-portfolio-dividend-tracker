@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  # Frontend application
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - appwrite
+    environment:
+      - NODE_ENV=production
+
+  # Appwrite service
+  appwrite:
+    image: appwrite/appwrite:1.4
+    restart: unless-stopped
+    networks:
+      - app-network
+    volumes:
+      - appwrite-uploads:/storage/uploads
+      - appwrite-cache:/storage/cache
+      - appwrite-config:/storage/config
+      - appwrite-certificates:/storage/certificates
+    ports:
+      - "9000:80" # Appwrite API & dashboard
+    environment:
+      - _APP_ENV=production
+      - _APP_OPENSSL_KEY_V1=your-openssl-key
+      - _APP_DOMAIN=your-domain.com
+      - _APP_DOMAIN_TARGET=your-domain.com
+      - _APP_SYSTEM_EMAIL_ADDRESS=noreply@your-domain.com
+      - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS=security@your-domain.com
+      - _APP_REDIS_HOST=redis
+      - _APP_REDIS_PORT=6379
+      - _APP_DB_HOST=mariadb
+      - _APP_DB_PORT=3306
+      - _APP_DB_USER=appwrite
+      - _APP_DB_PASS=appwrite-password
+      - _APP_DB_NAME=appwrite
+      - _APP_SMTP_HOST=smtp.mailgun.org
+      - _APP_SMTP_PORT=587
+      - _APP_SMTP_USERNAME=${MAILGUN_USERNAME}
+      - _APP_SMTP_PASSWORD=${MAILGUN_PASSWORD}
+      - _APP_SMTP_SECURE=tls
+    depends_on:
+      - mariadb
+      - redis
+
+  # MariaDB for Appwrite
+  mariadb:
+    image: mariadb:10.7
+    restart: unless-stopped
+    networks:
+      - app-network
+    volumes:
+      - appwrite-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=appwrite
+      - MYSQL_USER=appwrite
+      - MYSQL_PASSWORD=appwrite-password
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  # Redis for Appwrite
+  redis:
+    image: redis:7.0-alpine
+    restart: unless-stopped
+    networks:
+      - app-network
+    volumes:
+      - appwrite-redis:/data
+
+  # Traefik as reverse proxy and SSL termination
+  traefik:
+    image: traefik:v2.9
+    restart: unless-stopped
+    ports:
+      - "443:443"
+      - "8080:8080" # Dashboard (secure this in production)
+    networks:
+      - app-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik:/etc/traefik
+      - traefik-certificates:/letsencrypt
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=your-email@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  appwrite-uploads:
+  appwrite-cache:
+  appwrite-config:
+  appwrite-certificates:
+  appwrite-db:
+  appwrite-redis:
+  traefik-certificates:

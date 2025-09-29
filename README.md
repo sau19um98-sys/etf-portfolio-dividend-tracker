@@ -1,12 +1,13 @@
-# ETF Dividend Tracker 📈
+# Dividend Tracker 📈
 
-A production-ready ETF dividend tracking application optimized for the **Polygon.io Stocks Starter Plan**, featuring comprehensive portfolio management, dividend calculations, and delayed market data integration.
+A production-ready dividend tracking application optimized for the **Polygon.io Stocks Starter Plan**, featuring comprehensive portfolio management, real-time updates, offline capabilities, and market data integration.
 
-![ETF Dashboard](https://img.shields.io/badge/React-18.2.0-blue)
+![Dividend Tracker](https://img.shields.io/badge/React-18.2.0-blue)
 ![Vite](https://img.shields.io/badge/Vite-5.0.8-green)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3.6-blue)
 ![Appwrite](https://img.shields.io/badge/Appwrite-13.0.0-red)
 ![Polygon.io](https://img.shields.io/badge/Polygon.io-Starter-green)
+![PWA](https://img.shields.io/badge/PWA-Enabled-purple)
 
 ## ✨ Features
 
@@ -15,13 +16,15 @@ A production-ready ETF dividend tracking application optimized for the **Polygon
 - **Glassmorphism Design** - Modern, translucent UI elements with backdrop blur effects
 - **Responsive Layout** - Optimized for desktop, tablet, and mobile devices
 - **Smooth Animations** - Framer Motion powered transitions and micro-interactions
+- **Enhanced Data Visualization** - Improved charts and visual representations
 
-### 📊 ETF Tracking (Polygon.io Starter Plan)
-- **Delayed Price Data** - 15-minute delayed ETF prices with clear indicators
+### 📊 Stock Tracking (Polygon.io Starter Plan)
+- **Real-time Updates** - WebSocket integration for live price updates
+- **Offline Capabilities** - Service worker for offline access to your portfolio
 - **End-of-Day Updates** - Previous day closing prices and changes
 - **Dividend Management** - Historical dividend data and future projections
-- **Smart Rate Limiting** - Optimized for 5 API calls per minute limit
-- **Search & Filter** - Find ETFs by symbol or name with sector filtering
+- **Smart Rate Limiting** - Optimized for Polygon.io Starter Plan
+- **Search & Filter** - Find stocks by symbol or name with sector filtering
 
 ### 💼 Portfolio Management
 - **Holdings Overview** - Comprehensive portfolio allocation and performance metrics

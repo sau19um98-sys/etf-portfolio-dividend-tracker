@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { PortfolioProvider } from './context/PortfolioContext';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
+import EnhancedPortfolio from './pages/EnhancedPortfolio';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import ErrorBoundary from './components/common/ErrorBoundary';
@@ -87,6 +88,15 @@ function App() {
                     element={
                       <PrivateRoute>
                         <Portfolio />
+                      </PrivateRoute>
+                    }
+                  />
+                  
+                  <Route
+                    path="/enhanced-portfolio"
+                    element={
+                      <PrivateRoute>
+                        <EnhancedPortfolio />
                       </PrivateRoute>
                     }
                   />

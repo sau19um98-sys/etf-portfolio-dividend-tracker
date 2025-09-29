@@ -1,8 +1,22 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        serviceWorker: resolve(__dirname, 'src/serviceWorker.js'),
+      },
+      output: {
+        entryFileNames: (assetInfo) => {
+          return assetInfo.name === 'serviceWorker' ? '[name].js' : 'assets/[name]-[hash].js';
+        },
+      },
+    },
+  },
   server: {
     port: 3000,
     open: true,
